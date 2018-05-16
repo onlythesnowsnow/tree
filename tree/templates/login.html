@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+    <head>
+
+        <meta charset="utf-8">
+        <title>登录界面</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+        <!-- CSS -->
+        <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'> -->
+        <link rel="stylesheet" href="/static/css/reset.css">
+        <link rel="stylesheet" href="/static/css/supersized.css">
+        <link rel="stylesheet" href="/static/css/style2.css">
+		<!-- Javascript -->
+        <script src="static/js/jquery-1.8.2.min.js"></script>
+        <script src="static/js/supersized.3.2.7.min.js"></script>
+        <!-- <script src="static/js/supersized-init.js"></script> -->
+        <script src="static/js/scripts.js"></script>
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    </head>
+
+    <body>
+        <script>
+            jQuery(function($){
+
+            $.supersized({
+
+        // Functionality
+        slide_interval     : 4000,    // Length between transitions
+        transition         : 1,    // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+        transition_speed   : 1000,    // Speed of transition
+        performance        : 1,    // 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
+
+        // Size & Position
+        min_width          : 0,    // Min width allowed (in pixels)
+        min_height         : 0,    // Min height allowed (in pixels)
+        vertical_center    : 1,    // Vertically center background
+        horizontal_center  : 1,    // Horizontally center background
+        fit_always         : 0,    // Image will never exceed browser width or height (Ignores min. dimensions)
+        fit_portrait       : 1,    // Portrait images will not exceed browser height
+        fit_landscape      : 0,    // Landscape images will not exceed browser width
+
+        // Components
+        slide_links        : 'blank',    // Individual links for each slide (Options: false, 'num', 'name', 'blank')
+        slides             : [    // Slideshow Images
+                                 {image : 'static/images/backgrounds/1.jpg'},
+                                 {image : 'static/images/backgrounds/2.jpg'},
+                                 {image : 'static/images/backgrounds/3.jpg'}
+                             ]
+
+    });
+
+});
+
+        </script>
+
+        <div class="page-container">
+            <h1>Login</h1>
+            <form id="login" action="{{ url_for('submit_login') }}" method="post">
+                <div class="form-group">
+                <label for="username"></label>
+                <input type="username" name="username" class="form-control" id="username" placeholder="Username"><br>
+                </div>
+                <div class="form-group">
+                <label for="password"></label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password"><br>
+                </div>
+                <button type="submit" class="btn btn-default" form="login">Sign me in</button>
+            </form>
+        </div>
+    </body>
+
+</html>
+

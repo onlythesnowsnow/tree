@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block head %}
+
+{% endblock %}
+{% block title %}
+    首页
+{% endblock %}
+
+{% block main %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-4 column">
+			<p>
+                <br>
+                姓名：{{username}}
+			</p>
+		</div>
+		<div class="col-md-8 column">
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<p>
+                 <br>
+				 年龄：{{age}}
+				 <br>
+				 性别：{{sex}}
+				 <br>
+				 学院：{{college}}
+				 <br>
+				 学生：{{student}}
+			</p>
+		</div>
+	</div>
+</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

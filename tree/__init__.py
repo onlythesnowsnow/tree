@@ -26,6 +26,44 @@ def index():
 def get_node():
     return render_template('node.html')
 
+#用户注册
+@app.route('/login', methods=['get'])
+def get_register():
+    return render_template('user_register.html')
+
+@app.route('/add_user', methods=['post'])
+def submit_register():
+    nodes = read_file(NODE_FILENAME)
+    users = read_file(USER_FILENAME)
+    node = {}
+    logo = {}
+    user = {}
+    n = 0
+    node['name'] = request.form['name']
+    user['name'] = request.form['name']
+    node['age'] = request.form['age']
+    node['sex'] = request.form['sex']
+    node['category'] = request.form['category']
+    user['password'] = request.form['password']
+    if node['name'] != '' and user['password'] != '':
+        for u in nodes:
+            n = n + 1
+            if node['name'] == u['name'] :
+                logo['logo'] = u'用户名已经存在'
+                return render_template('result.html', **logo)
+            if (n == len(nodes)):
+                write_log(node['name'], '添加成功！')
+                write_log(admin, '新用户注册 用户名名【%s】' % user['name'])
+                logo['logo'] = u'添加成功'
+                nodes.append(node)
+                write_file(NODE_FILENAME, nodes)
+                users.append(user)
+                write_file(USER_FILENAME, users)
+                return render_template('result.html', **logo)
+    else:
+        logo['logo'] = u'用户名或密码不能为空'
+        return render_template('result.html', **logo)
+
 #删除学生
 @app.route('/delete_node', methods=['get'])
 def get_delete_node():
@@ -165,18 +203,25 @@ def get_delete_user():
 
 @app.route('/delete_user', methods=['post'])
 def submit_delete_user():
+    nodes = read_file(NODE_FILENAME)
     users = read_file(USER_FILENAME)
     user = {}
     logo = {}
     n = 0
+    y = 0
     user['name'] = request.form['delete_username']
     if user['name'] != '':
+        for node in nodes:
+            if node['name'] == user['name']:
+                del nodes[y]
+            y = y + 1
         for u in users:
             if user['name'] == u['name'] :
                 del users[n]
                 write_log( admin,'删除了用户 用户名名【%s】' % user['name'])
                 write_file(USER_FILENAME, users)
                 logo['logo'] = u'删除用户成功'
+                write_file(NODE_FILENAME,nodes)
                 return render_template('result.html', **logo)
             if (n == len(users)):
                 logo['logo'] = u'要删除的用户信息不存在'

@@ -103,17 +103,7 @@ def get_tree():
             del node['student']
         except KeyError:
             print 'error'
-    '''
-    write_file('graph.json', nodes)
-    write_file('link.json', links)
 
-    with open("graph.json",'a+') as fr:
-        fr.seek(0)
-        nodes = fr.read()
-    with open("link.json",'a+') as sr:
-        sr.seek(0)
-        links = sr.read()
-    '''
 
     data1 = json.dumps(nodes)
     data2 = json.dumps(links)
@@ -127,8 +117,25 @@ def get_user():
 #查找用户
 @app.route('/find_user', methods=['get'])
 def get_find_user():
-    return render_template('find_user.html')
+    nodes = read_file(NODE_FILENAME)
+    datas = []
+    for i in nodes:
+        data = {}
+        data['name'] = i['name']
+        data['age'] = i['age']
+        data['sex'] = i['sex']
+        data['category'] = i['category']
+        data['student'] = ''
+        try:
+            for temp in i['student']:
+                data['student'] = data['student'] + temp['target'] + '/'
+        except KeyError:
+            print 'error'
+        datas.append(data)
+    data = json.dumps(datas)
+    return render_template('find_user.html',data = data)
 
+'''
 @app.route('/find_user', methods=['post'])
 def submit_find_user():
     users = read_file(NODE_FILENAME)
@@ -149,6 +156,7 @@ def submit_find_user():
     else:
         logo['logo'] = u'用户名或密码不能为空'
         return render_template('result.html', **logo)
+'''
 
 #删除用户
 @app.route('/delete_user', methods=['get'])

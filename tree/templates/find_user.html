@@ -7,23 +7,34 @@
 {% endblock %}
 
 {% block main %}
-                            <div class="container">
-	                            <div class="row clearfix">
-                                </div>
-                                    <div class="col-md-4 column">
-		                            </div>
-		                        <div class="col-md-4 column">
-			                    <form id="find_user" action="{{ url_for('submit_find_user') }}" method="post">
-				                    <div class="form-group">
-					                 <label for="find_username">用户名：</label>
-                                     <input type="find_username" class="form-control" name="find_username" id="find_username" placeholder="请输入用户名" />
-				                    </div>
-                                    </br>
-                                    <button type="submit" class="btn btn-default" form="find_user">提交</button>
-			                    </form>
-		                            </div>
-                                    <div class="col-md-4 column">
-		                            </div>
-                                </div>
-                            </div>
+<table id="table"></table>
+<script>
+    function toJson(str){
+    return JSON.parse(str);
+    }
+
+	var js_data = toJson({{data|tojson}})
+
+$('#table').bootstrapTable({
+    			cache: true,      //设置为 false 禁用 AJAX 数据缓存
+				height: 800,
+				striped: true,   //设置为 true 会有隔行变色效果
+				pagination: true, //设置为 true 会在表格底部显示分页条
+				pageSize: 20,     //如果设置了分页，页面数据条数
+				pageNumber:1,    //如果设置了分页，首页页码
+				pageList: [20, 50, 100],  //如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
+				search: true,
+				showColumns: true,   //是否显示 内容列下拉框
+				showRefresh: true,   //是否显示 刷新按钮
+				showExport: true,
+				exportTypes: ['csv','txt','xml'],
+				search: true,
+				clickToSelect: true,  //设置true 将在点击行时，自动选择rediobox 和 checkbox
+                columns: [{field:"name",title:"姓名",align:"center",valign:"middle",sortable:"true"},{field:"age",title:"年龄",align:"center",valign:"middle",sortable:"true"},{field:"sex",title:"性别",align:"center",valign:"middle",sortable:"true"},{field:"category",title:"学院",align:"center",valign:"middle",sortable:"true"},{field:"student",title:"学生",align:"center",valign:"middle",sortable:"true"}],
+                data: js_data,
+                formatNoMatches: function(){
+                	return '无符合条件的记录';
+                }
+});
+</script>
 {% endblock %}
